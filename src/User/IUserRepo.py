@@ -28,7 +28,7 @@ class IUserRepo(ABC):
         pass
 
     @abstractmethod
-    def get_all(self, page: int, per_page: int, client_id: int):
+    def get_all(self, page: int, per_page: int, position_id: int or None, client_id: int):
         pass
 
     @abstractmethod

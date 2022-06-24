@@ -51,5 +51,7 @@ class UserController(Controller):
         else:
             return self.user_service.get_all(
                 page=self.page,
-                per_page=self.per_page)
+                per_page=self.per_page,
+                position_id=self.arguments.get('position_id')
+            )
 

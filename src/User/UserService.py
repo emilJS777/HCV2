@@ -92,7 +92,11 @@ class UserService(Service):
         return self.response_ok(user)
 
     # GET ALL
-    def get_all(self, page: int, per_page: int) -> dict:
-        user_list: dict = self._user_repository.get_all(page=page, per_page=per_page, client_id=g.client_id)
+    def get_all(self, page: int, per_page: int, position_id: int or None) -> dict:
+        user_list: dict = self._user_repository.get_all(
+            page=page,
+            per_page=per_page,
+            position_id=position_id,
+            client_id=g.client_id)
         return self.response_ok(user_list)
 

@@ -25,7 +25,9 @@ class ContextInitializer(Service):
                                # SPHERE
                                {'name': 'sphere_edit', 'title': 'редактировать сферу', 'firm': False},
                                # POSITION
-                               {'name': 'position_edit', 'title': 'редактировать позицию', 'firm': False}]
+                               {'name': 'position_edit', 'title': 'редактировать позицию', 'firm': False},
+                               # PRODUCT TYPE
+                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта', 'firm': False}]
 
     user: dict = {'first_name': 'Admin', 'last_name': 'Adminyan', 'email_address': 'e.pargevich@mail.ru', 'position_id': None}
     client: dict = {'name': 'First client', 'description': 'First client'}

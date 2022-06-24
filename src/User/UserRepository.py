@@ -67,8 +67,10 @@ class UserRepository(Repository, IUserRepo):
                                       self.user.client_id == client_id).first()
         return self.get_dict_items(user)
 
-    def get_all(self, page: int, per_page: int, client_id: int) -> dict:
-        users = self.user.query.filter_by(client_id=client_id).paginate(page=page, per_page=per_page)
+    def get_all(self, page: int, per_page: int, position_id: int or None, client_id: int) -> dict:
+        users = self.user.query.filter_by(client_id=client_id)\
+            .filter(User.position_id == position_id if position_id else User.position_id.isnot(None))\
+            .paginate(page=page, per_page=per_page)
         for user in users.items:
             user.position = user.position
         return self.get_page_items(users)
