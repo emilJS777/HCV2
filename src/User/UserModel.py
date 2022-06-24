@@ -13,7 +13,6 @@ class User(Model, db.Model):
     ticket = db.Column(db.String(20), unique=True)
     password_hash = db.Column(db.String(200))
 
-    # position = relationship("Position", backref=backref("user", uselist=False))
     position_id = db.Column(db.Integer, db.ForeignKey('position.id'))
     position = relationship("Position")
     permissions = relationship("Permission", secondary="user_permission", backref=db.backref('user'))
