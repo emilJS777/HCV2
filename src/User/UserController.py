@@ -20,6 +20,7 @@ class UserController(Controller):
             body=self.request.get_json()
         )
 
+    @expects_json(user_create_schema)
     @AuthMiddleware.check_authorize
     @PermissionMiddleware.check_permission('user_edit')
     def put(self):
@@ -38,8 +39,7 @@ class UserController(Controller):
     @PermissionMiddleware.check_permission('user_edit')
     def delete(self):
         return self.user_service.delete(
-            user_id=self.id,
-            body=self.request.get_json()
+            user_id=self.id
         )
 
     @AuthMiddleware.check_authorize

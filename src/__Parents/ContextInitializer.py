@@ -13,24 +13,24 @@ class ContextInitializer(Service):
     client_repository: IClientRepo = ClientRepository()
     permission_repository: IPermissionRepo = PermissionRepository()
 
-    #                           USER
-    permissions: list[dict] = [{'name': 'user_get', 'title': 'получить пользователей', 'firm': False},
-                               {'name': 'user_edit', 'title': 'редактировать пользователей', 'firm': False},
+    # USER
+    permissions: list[dict] = [{'name': 'user_get', 'title': 'получить пользователей'},
+                               {'name': 'user_edit', 'title': 'редактировать пользователей'},
                                # CLIENT
-                               {'name': 'client_get', 'title': 'получить клиентов', 'firm': False},
-                               {'name': 'client_edit', 'title': 'редактировать клиентов', 'firm': False},
+                               {'name': 'client_get', 'title': 'получить клиентов'},
+                               {'name': 'client_edit', 'title': 'редактировать клиентов'},
                                # FIRM
-                               {'name': 'firm_get', 'title': 'получить фирмы', 'firm': False},
-                               {'name': 'firm_edit', 'title': 'редактировать фирмы', 'firm': False},
+                               {'name': 'firm_get', 'title': 'получить фирмы'},
+                               {'name': 'firm_edit', 'title': 'редактировать фирмы'},
                                # SPHERE
-                               {'name': 'sphere_edit', 'title': 'редактировать сферу', 'firm': False},
+                               {'name': 'sphere_edit', 'title': 'редактировать сферу'},
                                # POSITION
-                               {'name': 'position_edit', 'title': 'редактировать позицию', 'firm': False},
+                               {'name': 'position_edit', 'title': 'редактировать позицию'},
                                # PRODUCT TYPE
-                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта', 'firm': False},
+                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта'},
                                # PRODUCT
-                               {'name': 'product_edit', 'title': 'редактировать продукт', 'firm': True},
-                               {'name': 'product_get', 'title': 'получить продукт', 'firm': True}]
+                               {'name': 'product_edit', 'title': 'редактировать продукт'},
+                               {'name': 'product_get', 'title': 'получить продукт'}]
 
     user: dict = {'first_name': 'Admin', 'last_name': 'Adminyan', 'email_address': 'e.pargevich@mail.ru', 'position_id': None}
     client: dict = {'name': 'First client', 'description': 'First client'}
@@ -50,11 +50,14 @@ class ContextInitializer(Service):
     # USER INITIALIZER
     def user_init(self, client_id):
         user = self.user_repository.get_by_first_client_id(client_id)
+        permissions = self.permissions_init()
+
         if not user:
-            permissions = self.permissions_init()
             self.user['ticket'] = self.generate_ticket_code()
             user = self.user_repository.create(body=self.user, client_id=client_id, permissions=permissions)
             logger.info(f"первый пользователь создан, код регистрации {user.ticket}")
+        else:
+            self.user_repository.update(user_id=user.id, body=self.user, client_id=client_id, permissions=permissions)
         return user
 
     # PERMISSIONS INITIALIZER
@@ -62,8 +65,7 @@ class ContextInitializer(Service):
         for permission_dict in self.permissions:
             permission = self.permission_repository.get_by_name(permission_dict['name'])
             if not permission:
-                permission = self.permission_repository.create(name=permission_dict['name'], title=permission_dict['title'],
-                                                  firm=permission_dict['firm'], firm_id=None)
+                permission = self.permission_repository.create(name=permission_dict['name'], title=permission_dict['title'], firm_id=None)
                 logger.info(f"разрешение по названию {permission.title} успешно создан ")
 
         permissions = self.permission_repository.get_all()

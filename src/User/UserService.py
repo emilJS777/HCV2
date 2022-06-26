@@ -2,11 +2,12 @@ from .IUserRepo import IUserRepo
 from flask_bcrypt import check_password_hash
 from ..Permission.IPermissionRepo import IPermissionRepo
 from ..Position.IPositionRepo import IPositionRepo
+from ..__Parents.Repository import Repository
 from ..__Parents.Service import Service
 from flask import g
 
 
-class UserService(Service):
+class UserService(Service, Repository):
     def __init__(self,
                  user_repository: IUserRepo,
                  permission_repository: IPermissionRepo,
@@ -72,15 +73,13 @@ class UserService(Service):
         return self.response_updated('регстрация прошла успешно')
 
     # DELETE
-    def delete(self, user_id: int, body: dict):
+    def delete(self, user_id: int):
         user = self._user_repository.get_by_id(user_id, client_id=g.client_id)
 
         if not user:
             return self.response_not_found('пользователь не найден')
 
-        if not check_password_hash(user['password_hash'], body['password']):
-            return self.response_invalid_password()
-
+        self._permission_repository.delete_user_permissions_by_user_id(user_id=user_id)
         self._user_repository.delete(user_id=user_id, client_id=g.client_id)
         return self.response_deleted('пользователь удален')
 
@@ -89,7 +88,17 @@ class UserService(Service):
         user = self._user_repository.get_by_id(user_id, client_id=g.client_id)
         if not user:
             return self.response_not_found('пользователь не найден')
-        return self.response_ok(user)
+        return self.response_ok({
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email_address': user.email_address,
+            'image_path': user.image_path,
+            'ticket': user.ticket,
+            'position': self.get_dict_items(user.position),
+            'client_id': user.client_id,
+            'permissions': self.get_array_items(user.permissions)
+        })
 
     # GET ALL
     def get_all(self, page: int, per_page: int, position_id: int or None) -> dict:

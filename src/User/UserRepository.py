@@ -54,8 +54,7 @@ class UserRepository(Repository, IUserRepo):
                                       self.user.client_id == client_id
                                       if client_id else
                                       self.user.client_id.isnot(None)).first()
-        user.position = user.position
-        return self.get_dict_items(user)
+        return user
 
     def get_by_name(self, name: str) -> dict:
         user = self.user.query.filter_by(name=name).first()
@@ -79,7 +78,7 @@ class UserRepository(Repository, IUserRepo):
         user = self.user.query.filter_by(ticket=ticket).first()
         return user
 
-    def get_by_first_client_id(self, client_id: int) -> dict:
+    def get_by_first_client_id(self, client_id: int) -> User:
         user = self.user.query.filter_by(client_id=client_id).first()
         return user
 
@@ -89,11 +88,9 @@ class UserRepository(Repository, IUserRepo):
         if permission_ids:
             found_permissions: list = []
 
-            for permission_id in permission_ids:
-                for permission in user.permissions:
-
-                    if permission_id == permission.id:
-                        found_permissions.append(permission)
+            for permission in user.permissions:
+                if permission.id in permission_ids:
+                    found_permissions.append(permission)
 
             return found_permissions
         else:

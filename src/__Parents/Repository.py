@@ -10,7 +10,8 @@ class Repository:
 
         for key, value in obj.__dict__.items():
             if not key == '_sa_instance_state':
-                if value.__class__.__name__ == 'Position' or value.__class__.__name__ == 'Sphere':
+                if value.__class__.__name__ == 'Position' \
+                        or value.__class__.__name__ == 'Sphere':
                     dict_item[key] = Repository.get_dict_items(value)
                 else:
                     dict_item[key] = value

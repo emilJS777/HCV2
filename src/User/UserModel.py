@@ -1,7 +1,6 @@
 from sqlalchemy.orm import relationship
 from src import db
 from src.__Parents.Model import Model
-from sqlalchemy.orm import backref
 
 
 class User(Model, db.Model):

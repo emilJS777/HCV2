@@ -13,7 +13,8 @@ class PermissionMiddleware(Service):
         def decoration(f):
             @wraps(f)
             def decoration_function(*args, **kwargs):
-                if PermissionMiddleware.permission_repository.get_by_name_user_id(permission_name, g.user_id):
+                permission = PermissionMiddleware.permission_repository.get_by_name_user_id(permission_name, g.user_id)
+                if permission:
                     return f(*args, **kwargs)
 
                 return PermissionMiddleware.response_forbidden('ресурс запрещен')

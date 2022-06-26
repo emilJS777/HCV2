@@ -25,9 +25,9 @@ class AuthMiddleware(Service):
                 return AuthMiddleware.response_invalid_login()
 
             if decode and AuthMiddleware.__auth_repository.get_by_user_id(decode['user_id']):
-                user: dict = AuthMiddleware.__user_repository.get_by_id(user_id=decode['user_id'], client_id=None)
-                g.user_id = user['id']
-                g.client_id = user['client_id']
+                user = AuthMiddleware.__user_repository.get_by_id(user_id=decode['user_id'], client_id=None)
+                g.user_id = user.id
+                g.client_id = user.client_id
 
                 return f(*args, **kwargs)
             return AuthMiddleware.response_invalid_login()

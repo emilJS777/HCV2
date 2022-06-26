@@ -40,7 +40,7 @@ class IUserRepo(ABC):
         pass
 
     @abstractmethod
-    def get_by_first_client_id(self, client_id: int) -> dict:
+    def get_by_first_client_id(self, client_id: int):
         pass
 
     @abstractmethod
