@@ -53,9 +53,10 @@ class FirmRepository(Repository, IFirmRepo):
             .filter_by(id=firm_id, client_id=client_id).first()
         return firm
 
-    def get_all(self, page: int, per_page: int, client_id: int) -> dict:
+    def get_all(self, page: int, per_page: int, sphere_id: int or None, client_id: int) -> dict:
         firms = self.firm.query.filter_by(client_id=client_id)\
-            .filter(Firm.id.in_(permission.firm_id for permission in g.user.firm_permissions))\
+            .filter(Firm.id.in_(permission.firm_id for permission in g.user.firm_permissions),
+                    self.firm.sphere_id == sphere_id if sphere_id else self.firm.sphere_id.isnot(None))\
             .paginate(page=page, per_page=per_page)
 
         for firm in firms.items:

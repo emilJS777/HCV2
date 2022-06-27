@@ -9,7 +9,9 @@ class FirmPermissionRepository(Repository, IFirmPermissionRepo):
 
     #                         PRODUCT
     firm_permissions: dict = [{'name': 'product_edit', 'title': 'редактировать продукт'},
-                              {'name': 'product_get', 'title': 'получить продукт'}]
+                              {'name': 'product_get', 'title': 'получить продукт'},
+                              {'name': 'storage_edit', 'title': 'редактировать хранилище'},
+                              {'name': 'storage_get', 'title': 'получить хранилище'}]
 
     def create(self, user, firm_id: int, client_id: int):
         firm_permission_list: list = []

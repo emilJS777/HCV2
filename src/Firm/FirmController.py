@@ -40,6 +40,8 @@ class FirmController(Controller):
         if self.id:
             res: dict = self.firm_service.get_by_id(self.id)
         else:
-            res: dict = self.firm_service.get_all(page=self.page, per_page=self.per_page)
+            res: dict = self.firm_service.get_all(page=self.page,
+                                                  per_page=self.per_page,
+                                                  sphere_id=self.arguments.get('sphere_id'))
 
         return res
