@@ -2,18 +2,23 @@ from .IFirmRepo import IFirmRepo
 from src.__Parents.Service import Service
 from flask import g
 from ..FirmPermission.IFirmPermissionRepo import IFirmPermissionRepo
+from ..Sphere.ISphereRepo import ISphereRepo
 from ..__Parents.Repository import Repository
 
 
 class FirmService(Service, Repository):
-    def __init__(self, firm_repository: IFirmRepo, firm_permission_repository: IFirmPermissionRepo):
+    def __init__(self, firm_repository: IFirmRepo, firm_permission_repository: IFirmPermissionRepo, sphere_repository: ISphereRepo):
         self.firm_repository: IFirmRepo = firm_repository
         self.firm_permission_repository: IFirmPermissionRepo = firm_permission_repository
+        self.sphere_repository: ISphereRepo = sphere_repository
 
     # CREATE
     def create(self, body: dict) -> dict:
         if self.firm_repository.get_by_title(title=body['title'], client_id=g.client_id):
             return self.response_conflict('фирма по данной названии уже существует')
+
+        if not self.sphere_repository.get_by_id(body['sphere_id']):
+            return self.response_not_found('сфера не найдена')
 
         firm = self.firm_repository.create(body=body, client_id=g.client_id)
         self.firm_permission_repository.create(user=g.user, firm_id=firm.id, client_id=g.client_id)
@@ -43,7 +48,7 @@ class FirmService(Service, Repository):
         firm = self.firm_repository.get_by_id(firm_id=firm_id, client_id=g.client_id)
         if not firm:
             return self.response_not_found('фирма не найдена')
-        
+
         firm.sphere = firm.sphere
         return self.response_ok(self.get_dict_items(firm))
 

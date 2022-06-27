@@ -9,8 +9,8 @@ class UserFirmPermission(Model, db.Model):
 
 
 class FirmPermission(Model, db.Model):
-    name = db.Column(db.String(60), unique=True)
-    title = db.Column(db.String(60), unique=True)
+    name = db.Column(db.String(60))
+    title = db.Column(db.String(60))
     firm_id = db.Column(db.Integer, nullable=False)
 
     users = relationship("User", secondary="user_firm_permission", backref=db.backref('firm_permission'))

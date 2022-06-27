@@ -1,9 +1,10 @@
 from src.ProductType.IProductTypeRepo import IProductTypeRepo
+from src.__Parents.Repository import Repository
 from src.__Parents.Service import Service
 from flask import g
 
 
-class ProductTypeService(Service):
+class ProductTypeService(Service, Repository):
     def __init__(self, product_type_repository: IProductTypeRepo):
         self.product_type_repository: IProductTypeRepo = product_type_repository
 
@@ -12,7 +13,7 @@ class ProductTypeService(Service):
         if self.product_type_repository.get_by_title(title=body['title'], client_id=g.client_id):
             return self.response_conflict('тип продукта уже существует')
 
-        self.product_type_repository.create(body, client_id=g.client_id)
+        self.product_type_repository.create(body=body, client_id=g.client_id)
         return self.response_created('тип продукта создан')
 
     # UPDATE
@@ -28,8 +29,7 @@ class ProductTypeService(Service):
                                                                 client_id=g.client_id):
             return self.response_conflict('тип продукта уже существует')
 
-        self.product_type_repository.update(product_type=product_type,
-                                            body=body)
+        self.product_type_repository.update(product_type=product_type, body=body)
         return self.response_updated('тип продукта обновлен ')
 
     # DELETED
@@ -51,7 +51,7 @@ class ProductTypeService(Service):
         if not product_type:
             return self.response_not_found('тип продукта не найден')
 
-        return self.response_ok(product_type)
+        return self.response_ok(self.get_dict_items(product_type))
 
     # GET ALL
     def get_all(self) -> dict:

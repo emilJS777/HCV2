@@ -7,7 +7,7 @@ class ProductTypeRepository(Repository, IProductTypeRepo):
     product_type: ProductType = ProductType
 
     def create(self, body: dict, client_id: int):
-        product_type = self.product_type
+        product_type = self.product_type()
         product_type.title = body['title']
         product_type.description = body['description']
         product_type.client_id = client_id
@@ -27,7 +27,7 @@ class ProductTypeRepository(Repository, IProductTypeRepo):
 
     def get_by_id(self, product_type_id: int,  client_id: int):
         product_type = self.product_type.query.filter_by(id=product_type_id, client_id=client_id).first()
-        return self.get_dict_items(product_type)
+        return product_type
 
     def get_by_title(self, title: str,  client_id: int) -> ProductType:
         product_type = self.product_type.query.filter_by(title=title).first()

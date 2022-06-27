@@ -6,10 +6,11 @@ from src.Permission.PermissionMiddleware import PermissionMiddleware
 from flask_expects_json import expects_json
 from .FirmValidator import firm_schema
 from src.FirmPermission.FirmPermissionRepository import FirmPermissionRepository
+from ..Sphere.SpeheRepository import SphereRepository
 
 
 class FirmController(Controller):
-    firm_service: FirmService = FirmService(FirmRepository(), FirmPermissionRepository())
+    firm_service: FirmService = FirmService(FirmRepository(), FirmPermissionRepository(), SphereRepository())
 
     @expects_json(firm_schema)
     @AuthMiddleware.check_authorize

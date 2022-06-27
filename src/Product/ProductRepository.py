@@ -2,6 +2,7 @@ from sqlalchemy import or_
 from src.__Parents.Repository import Repository
 from .IProductRepo import IProductRepo
 from .ProductModel import Product
+from flask import g
 
 
 class ProductRepository(Repository, IProductRepo):
@@ -28,11 +29,13 @@ class ProductRepository(Repository, IProductRepo):
         product.delete_db()
 
     def get_by_id(self, product_id: int, client_id: int) -> Product:
-        product = self.product.query.filter_by(id=product_id, client_id=client_id).first()
+        product = self.product.query.filter_by(id=product_id, client_id=client_id)\
+            .filter(Product.firm_id.in_(permission.firm_id for permission in g.user.firm_permissions)).first()
         return product
 
     def get_all(self, page: int, per_page: int, product_type_id: int or None, firm_id: int, client_id: int) -> list[dict]:
         products = self.product.query.filter_by(client_id=client_id, firm_id=firm_id)\
+            .filter(Product.firm_id.in_(permission.firm_id for permission in g.user.firm_permissions))\
             .filter(or_(self.product.product_type_id == product_type_id, self.product.product_type_id.isnot(None)))\
             .paginate(page=page, per_page=per_page)
         return self.get_page_items(products)

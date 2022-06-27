@@ -5,10 +5,11 @@ from src.Auth.AuthMiddleware import AuthMiddleware
 from flask_expects_json import expects_json
 from .ProductValidator import product_schema
 from ..FirmPermission.FirmPermissionMiddleware import FirmPermissionMiddleware
+from ..ProductType.ProductTypeRepository import ProductTypeRepository
 
 
 class ProductController(Controller):
-    product_service: ProductService = ProductService(ProductRepository())
+    product_service: ProductService = ProductService(ProductRepository(), ProductTypeRepository())
 
     # POST
     @expects_json(product_schema)
