@@ -4,11 +4,11 @@ from abc import ABC, abstractmethod
 class IUserRepo(ABC):
 
     @abstractmethod
-    def create(self, body: dict, client_id: int, permissions: list):
+    def create(self, body: dict, client_id: int, permissions: list, firm_permissions: list or None = None):
         pass
 
     @abstractmethod
-    def update(self, user_id: int, body: dict, client_id: int, permissions: list):
+    def update(self, user_id: int, body: dict, client_id: int, permissions: list, firm_permissions: list or None = None):
         pass
 
     @abstractmethod
@@ -43,9 +43,9 @@ class IUserRepo(ABC):
     def get_by_first_client_id(self, client_id: int):
         pass
 
-    @abstractmethod
-    def get_permissions_by_user_id(self, user_id: int, permission_ids: list or None = None):
-        pass
+    # @abstractmethod
+    # def get_permissions_by_user_id(self, user_id: int, permission_ids: list or None = None):
+    #     pass
 
     @abstractmethod
     def get_by_email_address(self, email_address: str):

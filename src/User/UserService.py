@@ -17,21 +17,34 @@ class UserService(Service, Repository):
         self._permission_repository: IPermissionRepo = permission_repository
         self.position_repository = position_repository
 
+    # FIND PERMISSION FROM G.USER.PERMISSION IN PERMISSION IDS
+    @staticmethod
+    def get_permissions_by_user_id(user_permissions: list, permission_ids: list) -> list:
+        found_permissions: list = []
+        for user_permission in user_permissions:
+            if user_permission.id in permission_ids:
+                found_permissions.append(user_permission)
+        return found_permissions
+
     # CREATE
     def create(self, body: dict) -> dict:
         if self._user_repository.get_by_email_address(body['email_address']):
             return self.response_conflict('аддресс электронной почты существует в системе')
 
-        permissions: list = self._user_repository.get_permissions_by_user_id(
-            user_id=g.user_id,
+        permissions: list = self.get_permissions_by_user_id(
+            user_permissions=g.user.permissions,
             permission_ids=body['permission_ids'])
 
-        body['ticket'] = self.generate_ticket_code()
+        firm_permissions: list = self.get_permissions_by_user_id(
+            user_permissions=g.user.firm_permissions,
+            permission_ids=body['firm_permission_ids'])
 
+        body['ticket'] = self.generate_ticket_code()
         user = self._user_repository.create(
             body=body,
             client_id=g.client_id,
-            permissions=permissions)
+            permissions=permissions,
+            firm_permissions=firm_permissions)
 
         return self.response_ok({'first_name': user.first_name,
                                  'last_name': user.last_name,
@@ -48,15 +61,20 @@ class UserService(Service, Repository):
         if self._user_repository.get_by_email_address_exclude_id(user_id=user_id, email_address=body['email_address']):
             return self.response_conflict('аддресс электронной почты существует в системе')
 
-        permissions: list = self._user_repository.get_permissions_by_user_id(
-            user_id=g.user_id,
+        permissions: list = self.get_permissions_by_user_id(
+            user_permissions=g.user.permissions,
             permission_ids=body['permission_ids'])
+
+        firm_permissions: list = self.get_permissions_by_user_id(
+            user_permissions=g.user.firm_permissions,
+            permission_ids=body['firm_permission_ids'])
 
         self._user_repository.update(
             user_id=user_id,
             body=body,
             client_id=g.client_id,
-            permissions=permissions)
+            permissions=permissions,
+            firm_permissions=firm_permissions)
 
         return self.response_updated('данные пользователя успешно обновлены')
 
@@ -97,7 +115,8 @@ class UserService(Service, Repository):
             'ticket': user.ticket,
             'position': self.get_dict_items(user.position),
             'client_id': user.client_id,
-            'permissions': self.get_array_items(user.permissions)
+            'permissions': self.get_array_items(user.permissions),
+            'firm_permissions': self.get_array_items(user.firm_permissions)
         })
 
     # GET ALL

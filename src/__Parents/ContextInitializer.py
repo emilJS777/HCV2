@@ -27,10 +27,7 @@ class ContextInitializer(Service):
                                # POSITION
                                {'name': 'position_edit', 'title': 'редактировать позицию'},
                                # PRODUCT TYPE
-                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта'},
-                               # PRODUCT
-                               {'name': 'product_edit', 'title': 'редактировать продукт'},
-                               {'name': 'product_get', 'title': 'получить продукт'}]
+                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта'}]
 
     user: dict = {'first_name': 'Admin', 'last_name': 'Adminyan', 'email_address': 'e.pargevich@mail.ru', 'position_id': None}
     client: dict = {'name': 'First client', 'description': 'First client'}
@@ -65,7 +62,7 @@ class ContextInitializer(Service):
         for permission_dict in self.permissions:
             permission = self.permission_repository.get_by_name(permission_dict['name'])
             if not permission:
-                permission = self.permission_repository.create(name=permission_dict['name'], title=permission_dict['title'], firm_id=None)
+                permission = self.permission_repository.create(name=permission_dict['name'], title=permission_dict['title'])
                 logger.info(f"разрешение по названию {permission.title} успешно создан ")
 
         permissions = self.permission_repository.get_all()

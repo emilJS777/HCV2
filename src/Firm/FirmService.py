@@ -1,18 +1,21 @@
 from .IFirmRepo import IFirmRepo
 from src.__Parents.Service import Service
 from flask import g
+from ..FirmPermission.IFirmPermissionRepo import IFirmPermissionRepo
 
 
 class FirmService(Service):
-    def __init__(self, firm_repository: IFirmRepo):
+    def __init__(self, firm_repository: IFirmRepo, firm_permission_repository: IFirmPermissionRepo):
         self.firm_repository: IFirmRepo = firm_repository
+        self.firm_permission_repository: IFirmPermissionRepo = firm_permission_repository
 
     # CREATE
     def create(self, body: dict) -> dict:
         if self.firm_repository.get_by_title(title=body['title'], client_id=g.client_id):
             return self.response_conflict('фирма по данной названии уже существует')
 
-        self.firm_repository.create(body=body, client_id=g.client_id)
+        firm = self.firm_repository.create(body=body, client_id=g.client_id)
+        self.firm_permission_repository.create(user=g.user, firm_id=firm.id, client_id=g.client_id)
         return self.response_created('фирма успешно создана')
 
     # UPDATE

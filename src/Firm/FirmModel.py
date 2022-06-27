@@ -5,7 +5,7 @@ from src.__Parents.Model import Model
 
 class Firm(Model, db.Model):
     title = db.Column(db.String(40), nullable=False)
-    email_address = db.Column(db.String(80), unique=True, nullable=False)
+    email_address = db.Column(db.String(80), nullable=False)
     activity_address = db.Column(db.String(80), nullable=False)
     legal_address = db.Column(db.String(80), nullable=False)
     phone_number = db.Column(db.Integer, nullable=False)

@@ -9,6 +9,12 @@ class Model:
         db.session.add(self)
         db.session.commit()
 
+    # SAVE LIST DB
+    @staticmethod
+    def save_all_db(model_list: list):
+        db.session.add_all(model_list)
+        db.session.commit()
+
     # DELETE DB
     def delete_db(self):
         db.session.delete(self)

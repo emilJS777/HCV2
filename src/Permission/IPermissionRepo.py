@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class IPermissionRepo(ABC):
 
     @abstractmethod
-    def create(self, name: str, title: str, firm_id: int or None):
+    def create(self, name: str, title: str):
         pass
 
     @abstractmethod

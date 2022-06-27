@@ -10,11 +10,10 @@ class PermissionRepository(Repository, IPermissionRepo):
     user_permission: UserPermission = UserPermission
 
     # CREATE
-    def create(self, name: str, title: str, firm_id: int or None) -> Permission:
+    def create(self, name: str, title: str) -> Permission:
         permission = self.permission()
         permission.name = name
         permission.title = title
-        permission.firm_id = firm_id
         permission.save_db()
         return permission
 

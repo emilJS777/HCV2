@@ -32,15 +32,15 @@ class AuthService(Service, Repository):
         return self.response_invalid_login()
 
     def get_profile(self) -> dict:
-        profile = self.__user_repository.get_by_id(g.user_id, client_id=g.client_id)
         return self.response_ok({
-            'id': profile.id,
-            'first_name': profile.first_name,
-            'last_name': profile.last_name,
-            'email_address': profile.email_address,
-            'image_path': profile.image_path,
-            'ticket': profile.ticket,
-            'position': self.get_dict_items(profile.position),
-            'client_id': profile.client_id,
-            'permissions': self.get_array_items(profile.permissions)
+            'id': g.user.id,
+            'first_name': g.user.first_name,
+            'last_name': g.user.last_name,
+            'email_address': g.user.email_address,
+            'image_path': g.user.image_path,
+            'ticket': g.user.ticket,
+            'position': self.get_dict_items(g.user.position),
+            'client_id': g.user.client_id,
+            'permissions': self.get_array_items(g.user.permissions),
+            'firm_permissions': self.get_array_items(g.user.firm_permissions)
         })

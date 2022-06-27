@@ -9,7 +9,7 @@ from flask_bcrypt import generate_password_hash
 class UserRepository(Repository, IUserRepo):
     user: User = User
 
-    def create(self, body: dict, client_id: int, permissions: list) -> dict:
+    def create(self, body: dict, client_id: int, permissions: list, firm_permissions: list or None = None) -> User:
         user = self.user()
         user.ticket = body['ticket']
         user.first_name = body['first_name'].title()
@@ -18,16 +18,20 @@ class UserRepository(Repository, IUserRepo):
         user.position_id = body['position_id']
         user.client_id = client_id
         user.permissions = permissions
+        if firm_permissions:
+            user.firm_permissions = firm_permissions
         user.save_db()
         return user
 
-    def update(self, user_id: int, body: dict, client_id: int, permissions: list) -> dict:
+    def update(self, user_id: int, body: dict, client_id: int, permissions: list, firm_permissions: list or None = None) -> User:
         user = self.user.query.filter_by(id=user_id, client_id=client_id).first()
         user.first_name = body['first_name']
         user.last_name = body['last_name']
         user.email_address = body['email_address'],
         user.position_id = body['position_id']
         user.permissions = permissions
+        if firm_permissions:
+            user.firm_permissions = firm_permissions
         user.update_db()
         return user
 
@@ -81,20 +85,6 @@ class UserRepository(Repository, IUserRepo):
     def get_by_first_client_id(self, client_id: int) -> User:
         user = self.user.query.filter_by(client_id=client_id).first()
         return user
-
-    def get_permissions_by_user_id(self, user_id: int, permission_ids: list or None = None):
-        user = self.user.query.filter_by(id=user_id).first()
-
-        if permission_ids:
-            found_permissions: list = []
-
-            for permission in user.permissions:
-                if permission.id in permission_ids:
-                    found_permissions.append(permission)
-
-            return found_permissions
-        else:
-            return user.permissions
 
     def get_by_email_address(self, email_address: str) -> User:
         user = self.user.query.filter_by(email_address=email_address).first()
