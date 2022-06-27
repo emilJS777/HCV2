@@ -4,7 +4,7 @@ from .ProductService import ProductService
 from src.Auth.AuthMiddleware import AuthMiddleware
 from flask_expects_json import expects_json
 from .ProductValidator import product_schema
-from src.Permission.PermissionMiddleware import PermissionMiddleware
+from ..FirmPermission.FirmPermissionMiddleware import FirmPermissionMiddleware
 
 
 class ProductController(Controller):
@@ -13,7 +13,7 @@ class ProductController(Controller):
     # POST
     @expects_json(product_schema)
     @AuthMiddleware.check_authorize
-    @PermissionMiddleware.check_permission('product_edit')
+    @FirmPermissionMiddleware.check_permission('product_edit')
     def post(self) -> dict:
         res: dict = self.product_service.create(body=self.request.get_json())
         return res
@@ -21,7 +21,7 @@ class ProductController(Controller):
     # PUT
     @expects_json(product_schema)
     @AuthMiddleware.check_authorize
-    @PermissionMiddleware.check_permission('product_edit')
+    @FirmPermissionMiddleware.check_permission('product_edit')
     def put(self) -> dict:
         res: dict = self.product_service.update(product_id=self.id,
                                                 body=self.request.get_json())
@@ -29,14 +29,14 @@ class ProductController(Controller):
 
     # DELETE
     @AuthMiddleware.check_authorize
-    @PermissionMiddleware.check_permission('product_edit')
+    @FirmPermissionMiddleware.check_permission('product_edit')
     def delete(self) -> dict:
         res: dict = self.product_service.delete(product_id=self.id)
         return res
 
     # GET
     @AuthMiddleware.check_authorize
-    @PermissionMiddleware.check_permission('product_get')
+    @FirmPermissionMiddleware.check_permission('product_get')
     def get(self) -> dict:
         if self.id:
             res: dict = self.product_service.get_by_id(product_id=self.id)

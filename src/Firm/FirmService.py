@@ -2,9 +2,10 @@ from .IFirmRepo import IFirmRepo
 from src.__Parents.Service import Service
 from flask import g
 from ..FirmPermission.IFirmPermissionRepo import IFirmPermissionRepo
+from ..__Parents.Repository import Repository
 
 
-class FirmService(Service):
+class FirmService(Service, Repository):
     def __init__(self, firm_repository: IFirmRepo, firm_permission_repository: IFirmPermissionRepo):
         self.firm_repository: IFirmRepo = firm_repository
         self.firm_permission_repository: IFirmPermissionRepo = firm_permission_repository
@@ -42,8 +43,9 @@ class FirmService(Service):
         firm = self.firm_repository.get_by_id(firm_id=firm_id, client_id=g.client_id)
         if not firm:
             return self.response_not_found('фирма не найдена')
-
-        return self.response_ok(firm)
+        
+        firm.sphere = firm.sphere
+        return self.response_ok(self.get_dict_items(firm))
 
     # GET ALL
     def get_all(self, page: int, per_page: int) -> dict:

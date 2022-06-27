@@ -15,7 +15,7 @@ class UserService(Service, Repository):
 
         self._user_repository: IUserRepo = user_repository
         self._permission_repository: IPermissionRepo = permission_repository
-        self.position_repository = position_repository
+        self.position_repository: IPositionRepo = position_repository
 
     # FIND PERMISSION FROM G.USER.PERMISSION IN PERMISSION IDS
     @staticmethod
