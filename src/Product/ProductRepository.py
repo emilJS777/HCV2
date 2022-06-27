@@ -35,7 +35,6 @@ class ProductRepository(Repository, IProductRepo):
 
     def get_all(self, page: int, per_page: int, product_type_id: int or None, firm_id: int, client_id: int) -> list[dict]:
         products = self.product.query.filter_by(client_id=client_id, firm_id=firm_id)\
-            .filter(Product.firm_id.in_(permission.firm_id for permission in g.user.firm_permissions))\
             .filter(or_(self.product.product_type_id == product_type_id, self.product.product_type_id.isnot(None)))\
             .paginate(page=page, per_page=per_page)
         return self.get_page_items(products)
