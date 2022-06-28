@@ -26,7 +26,9 @@ class ContextInitializer(Service):
                                # POSITION
                                {'name': 'position_edit', 'title': 'редактировать позицию'},
                                # PRODUCT TYPE
-                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта'}]
+                               {'name': 'product_type_edit', 'title': 'редактировать тип продукта'},
+                               # UNIT
+                               {'name': 'unit_edit', 'title': 'редактировать Единицу измерения '}]
 
     user: dict = {'first_name': 'Admin', 'last_name': 'Adminyan', 'email_address': 'e.pargevich@mail.ru', 'position_id': None}
     client: dict = {'name': 'First client', 'description': 'First client'}

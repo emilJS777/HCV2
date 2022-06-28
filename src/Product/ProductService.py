@@ -3,14 +3,18 @@ from .IProductRepo import IProductRepo
 from flask import g
 from ..ProductType.IProductTypeRepo import IProductTypeRepo
 from ..Storage.IStorageRepo import IStorageRepo
+from ..Unit.IUnitRepo import IUnitRepo
 from ..__Parents.Repository import Repository
 
 
 class ProductService(Service, Repository):
-    def __init__(self, product_repository: IProductRepo, product_type_repository: IProductTypeRepo, storage_repository: IStorageRepo):
+    def __init__(self, product_repository: IProductRepo, product_type_repository: IProductTypeRepo,
+                 storage_repository: IStorageRepo, unit_repository: IUnitRepo):
+
         self.product_repository: IProductRepo = product_repository
         self.product_type_repository: IProductTypeRepo = product_type_repository
         self.storage_repository: IStorageRepo = storage_repository
+        self.unit_repository: IUnitRepo = unit_repository
 
     # CREATE
     def create(self, body: dict) -> dict:
@@ -19,6 +23,9 @@ class ProductService(Service, Repository):
 
         if not self.storage_repository.get_by_id(body['storage_id']):
             return self.response_not_found('хранилище не найдено')
+
+        if not self.unit_repository.get_by_id(body['unit_id']):
+            return self.response_not_found('единица измерения не найдена')
 
         self.product_repository.create(
             body=body,
@@ -37,6 +44,9 @@ class ProductService(Service, Repository):
 
         if not self.storage_repository.get_by_id(body['storage_id']):
             return self.response_not_found('хранилище не найдено')
+
+        if not self.unit_repository.get_by_id(body['unit_id']):
+            return self.response_not_found('единица измерения не найдена')
 
         self.product_repository.update(product=product, body=body)
         return self.response_updated('продукт обновлен')
@@ -60,17 +70,22 @@ class ProductService(Service, Repository):
             "id": product.id,
             "name": product.name,
             "description": product.description,
+            "wholesale_price": product.wholesale_price,
+            "retail_price": product.retail_price,
+            "count": product.count,
+            "unit": {'id': product.unit.id, 'title': product.unit.title, 'description': product.unit.description},
             "product_type": {'title': product.product_type.title},
             "storage": {'title': product.storage.title}
         })
 
     # GET ALL
-    def get_all(self, page: int, per_page: int, product_type_id: int or None, storage_id: int or None) -> dict:
+    def get_all(self, page: int, per_page: int, code: int or None, product_type_id: int or None, storage_id: int or None) -> dict:
         products = self.product_repository.get_all(
             page=page,
             per_page=per_page,
             product_type_id=product_type_id,
             storage_id=storage_id,
-            client_id=g.client_id)
+            client_id=g.client_id,
+            code=code)
 
         return self.response_ok(products)

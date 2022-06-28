@@ -17,7 +17,7 @@ class IProductRepo(ABC):
         pass
 
     @abstractmethod
-    def get_all(self, page: int, per_page: int, product_type_id: int or None, storage_id: int or None, client_id: int) -> list[dict]:
+    def get_all(self, page: int, per_page: int, product_type_id: int or None, storage_id: int or None, code: int or None, client_id: int) -> list[dict]:
         pass
 
     @abstractmethod

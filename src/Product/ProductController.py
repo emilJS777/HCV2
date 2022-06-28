@@ -7,12 +7,14 @@ from .ProductValidator import product_schema
 from ..FirmPermission.FirmPermissionMiddleware import FirmPermissionMiddleware
 from ..ProductType.ProductTypeRepository import ProductTypeRepository
 from ..Storage.StorageRepository import StorageRepository
+from ..Unit.UnitRepository import UnitRepository
 
 
 class ProductController(Controller):
     product_service: ProductService = ProductService(ProductRepository(),
                                                      ProductTypeRepository(),
-                                                     StorageRepository())
+                                                     StorageRepository(),
+                                                     UnitRepository())
 
     # POST
     @expects_json(product_schema)
@@ -49,6 +51,7 @@ class ProductController(Controller):
                 page=self.page,
                 per_page=self.per_page,
                 product_type_id=self.arguments.get('product_type_id'),
-                storage_id=self.arguments.get('storage_id'))
+                storage_id=self.arguments.get('storage_id'),
+                code=self.arguments.get('code'))
 
         return res
