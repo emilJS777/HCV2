@@ -13,7 +13,7 @@ class StorageController(Controller):
     # POST
     @expects_json(storage_schema)
     @AuthMiddleware.check_authorize
-    @FirmPermissionMiddleware.check_permission('storage_edit')
+    @FirmPermissionMiddleware.check_permission('storage_edit', firm_request=True)
     def post(self) -> dict:
         res: dict = self.storage_service.create(self.request.get_json())
         return res
@@ -21,7 +21,7 @@ class StorageController(Controller):
     # PUT
     @expects_json(storage_schema)
     @AuthMiddleware.check_authorize
-    @FirmPermissionMiddleware.check_permission('storage_edit')
+    @FirmPermissionMiddleware.check_permission('storage_edit', firm_request=True)
     def put(self) -> dict:
         res: dict = self.storage_service.update(storage_id=self.id, body=self.request.get_json())
         return res

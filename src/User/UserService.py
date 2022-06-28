@@ -31,6 +31,9 @@ class UserService(Service, Repository):
         if self._user_repository.get_by_email_address(body['email_address']):
             return self.response_conflict('аддресс электронной почты существует в системе')
 
+        if not self.position_repository.get_by_id(body['position_id']):
+            return self.response_not_found('позиция не найдена')
+
         permissions: list = self.get_permissions_by_user_id(
             user_permissions=g.user.permissions,
             permission_ids=body['permission_ids'])
@@ -57,6 +60,9 @@ class UserService(Service, Repository):
     def update(self, user_id: int, body: dict) -> dict:
         if not self._user_repository.get_by_id(user_id, client_id=g.client_id):
             return self.response_not_found('пользователь не найден')
+
+        if not self.position_repository.get_by_id(body['position_id']):
+            return self.response_not_found('позиция не найдена')
 
         if self._user_repository.get_by_email_address_exclude_id(user_id=user_id, email_address=body['email_address']):
             return self.response_conflict('аддресс электронной почты существует в системе')

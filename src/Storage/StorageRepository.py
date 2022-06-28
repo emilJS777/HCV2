@@ -32,16 +32,16 @@ class StorageRepository(Repository, IStorageRepo):
 
     def get_by_id(self, storage_id: int) -> Storage:
         storage: Storage = self.storage.query.filter_by(id=storage_id)\
-            .filter(Storage.firm_id.in_(permission.firm_id for permission in g.user.firm_permissions)).first()
+            .filter(Storage.firm_id.in_(g.allowed_firm_ids)).first()
         return storage
 
     def get_by_code(self, code: str) -> Storage:
         storage: Storage = self.storage.query.filter_by(code=code, client_id=g.user.client_id) \
-            .filter(Storage.firm_id.in_(permission.firm_id for permission in g.user.firm_permissions)).first()
+            .filter(Storage.firm_id.in_(g.allowed_firm_ids)).first()
         return storage
 
     def get_all(self, page: int, per_page: int, firm_id: int or None, code: str or None):
-        storages = self.storage.query.filter(Storage.firm_id.in_(permission.firm_id for permission in g.user.firm_permissions),
+        storages = self.storage.query.filter(Storage.firm_id.in_(g.allowed_firm_ids),
                                              Storage.firm_id == firm_id if firm_id else Storage.firm_id.isnot(None),
                                              Storage.code == code if code else Storage.code.isnot(None),
                                              Storage.client_id == g.user.client_id)\

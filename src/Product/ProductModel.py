@@ -10,7 +10,7 @@ class Product(Model, db.Model):
     product_type_id = db.Column(db.Integer, db.ForeignKey('product_type.id'))
     product_type = relationship("ProductType")
 
-    firm_id = db.Column(db.Integer, db.ForeignKey('firm.id'))
-    firm = relationship("Firm")
+    storage_id = db.Column(db.Integer, db.ForeignKey('storage.id'))
+    storage = relationship("Storage")
 
     client_id = db.Column(db.Integer)

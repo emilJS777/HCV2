@@ -28,3 +28,4 @@ class FirmPermissionRepository(Repository, IFirmPermissionRepo):
     def get_by_id(self, firm_permission_id: int) -> FirmPermission:
         firm_permission = self.firm_permission.query.filter_by(id=firm_permission_id).first()
         return firm_permission
+

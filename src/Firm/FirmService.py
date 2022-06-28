@@ -37,10 +37,15 @@ class FirmService(Service, Repository):
 
     # DELETE
     def delete(self, firm_id: int) -> dict:
-        if not self.firm_repository.get_by_id(firm_id=firm_id, client_id=g.client_id):
+        firm = self.firm_repository.get_by_id(firm_id=firm_id, client_id=g.client_id)
+        if not firm:
             return self.response_not_found('фирма не найдена')
 
-        self.firm_repository.delete(firm_id=firm_id)
+        try:
+            self.firm_repository.delete(firm_id)
+        except:
+            return self.response_forbidden('объект нельзя удалить так как к нему ссылаются другие объекты')
+
         return self.response_deleted('фирма удалена')
 
     # GET BY ID

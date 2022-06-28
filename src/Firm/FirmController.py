@@ -7,6 +7,7 @@ from flask_expects_json import expects_json
 from .FirmValidator import firm_schema
 from src.FirmPermission.FirmPermissionRepository import FirmPermissionRepository
 from ..Sphere.SpeheRepository import SphereRepository
+from src.FirmPermission.FirmPermissionMiddleware import FirmPermissionMiddleware
 
 
 class FirmController(Controller):
@@ -35,7 +36,7 @@ class FirmController(Controller):
         return res
 
     @AuthMiddleware.check_authorize
-    @PermissionMiddleware.check_permission('firm_get')
+    @FirmPermissionMiddleware.check_permission(False)
     def get(self) -> dict:
         if self.id:
             res: dict = self.firm_service.get_by_id(self.id)

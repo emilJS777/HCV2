@@ -44,7 +44,7 @@ class FirmRepository(Repository, IFirmRepo):
         return firm
 
     def delete(self, firm_id: int) -> Firm:
-        firm = self.firm.query.filter_by(id=firm_id).first()
+        firm = self.firm.query.filter(Firm.id == firm_id).first()
         firm.delete_db()
         return firm
 
@@ -55,8 +55,8 @@ class FirmRepository(Repository, IFirmRepo):
 
     def get_all(self, page: int, per_page: int, sphere_id: int or None, client_id: int) -> dict:
         firms = self.firm.query.filter_by(client_id=client_id)\
-            .filter(Firm.id.in_(permission.firm_id for permission in g.user.firm_permissions),
-                    self.firm.sphere_id == sphere_id if sphere_id else self.firm.sphere_id.isnot(None))\
+            .filter(self.firm.id.in_(g.allowed_firm_ids))\
+            .filter(self.firm.sphere_id == sphere_id if sphere_id else self.firm.sphere_id.isnot(None))\
             .paginate(page=page, per_page=per_page)
 
         for firm in firms.items:

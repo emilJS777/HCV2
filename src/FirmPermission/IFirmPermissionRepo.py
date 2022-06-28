@@ -10,3 +10,4 @@ class IFirmPermissionRepo(ABC):
     @abstractmethod
     def get_by_id(self, firm_permission_id: int):
         pass
+

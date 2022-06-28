@@ -20,7 +20,6 @@ class ContextInitializer(Service):
                                {'name': 'client_get', 'title': 'получить клиентов'},
                                {'name': 'client_edit', 'title': 'редактировать клиентов'},
                                # FIRM
-                               {'name': 'firm_get', 'title': 'получить фирмы'},
                                {'name': 'firm_edit', 'title': 'редактировать фирмы'},
                                # SPHERE
                                {'name': 'sphere_edit', 'title': 'редактировать сферу'},
