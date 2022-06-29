@@ -9,6 +9,7 @@ from .ProductType.ProductTypeController import ProductTypeController
 from .Product.ProductController import ProductController
 from .Storage.StorageController import StorageController
 from .Unit.UnitController import UnitController
+from .IncomeType.IncomeTypeController import IncomeTypeController
 
 api.add_resource(AuthController, "/auth")
 api.add_resource(UserController, "/user")
@@ -20,3 +21,4 @@ api.add_resource(ProductTypeController, "/product_type")
 api.add_resource(ProductController, "/product")
 api.add_resource(StorageController, "/storage")
 api.add_resource(UnitController, "/unit")
+api.add_resource(IncomeTypeController, "/income_type")
