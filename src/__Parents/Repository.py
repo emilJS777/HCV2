@@ -13,7 +13,8 @@ class Repository:
                 if value.__class__.__name__ == 'Position' \
                         or value.__class__.__name__ == 'Sphere'\
                         or value.__class__.__name__ == 'Unit' \
-                        or value.__class__.__name__ == 'Firm':
+                        or value.__class__.__name__ == 'Firm' \
+                        or value.__class__.__name__ == 'ProductType':
                     dict_item[key] = Repository.get_dict_items(value)
                 else:
                     dict_item[key] = value

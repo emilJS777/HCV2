@@ -35,10 +35,7 @@ class ContextInitializer(Service):
                                {'name': 'expense_type_edit', 'title': 'редактировать тип расходов '},
                                # COLLEAGUE
                                {'name': 'colleague_edit', 'title': 'редактировать колег'},
-                               {'name': 'colleague_get', 'title': 'получить колег'},
-                               # RESOURCE
-                               {'name': 'resource_edit', 'title': 'редактировать ресурсы'},
-                               {'name': 'resource_get', 'title': 'получить ресурсы'}]
+                               {'name': 'colleague_get', 'title': 'получить колег'}]
 
     user: dict = {'first_name': 'Admin', 'last_name': 'Adminyan', 'email_address': 'e.pargevich@mail.ru', 'position_id': None}
     client: dict = {'name': 'First client', 'description': 'First client'}

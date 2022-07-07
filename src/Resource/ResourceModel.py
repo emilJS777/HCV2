@@ -1,3 +1,4 @@
+from sqlalchemy.orm import relationship
 from src import db
 from src.__Parents.Model import Model
 
@@ -13,5 +14,8 @@ class Resource(Model, db.Model):
 
     employee_bank_account = db.Column(db.String(80))
     location = db.Column(db.String(80))
+
+    firm_id = db.Column(db.Integer, db.ForeignKey('firm.id'))
+    firm = relationship("Firm")
 
     client_id = db.Column(db.Integer)

@@ -16,6 +16,7 @@ class ResourceRepository(Repository, IResourceRepo):
         resource.hm_group = body['hm_group']
         resource.employee_bank_account = body['employee_bank_account']
         resource.location = body['location']
+        resource.firm_id = body['firm_id']
 
         resource.client_id = g.client_id
         resource.save_db()
@@ -28,6 +29,7 @@ class ResourceRepository(Repository, IResourceRepo):
         resource.hm_group = body['hm_group']
         resource.employee_bank_account = body['employee_bank_account']
         resource.location = body['location']
+        resource.firm_id = body['firm_id']
 
         resource.client_id = g.client_id
         resource.update_db()
@@ -36,10 +38,16 @@ class ResourceRepository(Repository, IResourceRepo):
         resource.delete_db()
 
     def get_by_id(self, resource_id: int) -> Resource:
-        resource = self.resource.query.filter_by(id=resource_id, client_id=g.client_id).first()
+        resource = self.resource.query.filter(Resource.firm_id.in_(g.allowed_firm_ids),
+                                              Resource.id == resource_id,
+                                              Resource.client_id == g.client_id).first()
         return resource
 
-    def get_all(self, page: int, per_page: int) -> list[dict]:
-        resources = self.resource.query.filter_by(client_id=g.client_id).paginate(page=page, per_page=per_page)
+    def get_all(self, page: int, per_page: int, firm_id: int or None) -> list[dict]:
+        resources = self.resource.query.filter(
+            Resource.firm_id.in_(g.allowed_firm_ids),
+            Resource.firm_id == firm_id if firm_id else Resource.firm_id.isnot(None),
+            Resource.client_id == g.client_id
+        ).paginate(page=page, per_page=per_page)
         return self.get_page_items(resources)
     

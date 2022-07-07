@@ -5,10 +5,11 @@ from flask_expects_json import expects_json
 from .StorageValidator import storage_schema
 from src.Auth.AuthMiddleware import AuthMiddleware
 from src.FirmPermission.FirmPermissionMiddleware import FirmPermissionMiddleware
+from src.Firm.FirmRepository import FirmRepository
 
 
 class StorageController(Controller):
-    storage_service: StorageService = StorageService(StorageRepository())
+    storage_service: StorageService = StorageService(StorageRepository(), FirmRepository())
 
     # POST
     @expects_json(storage_schema)

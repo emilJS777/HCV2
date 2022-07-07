@@ -1,16 +1,22 @@
 from .IStorageRepo import IStorageRepo
 from src.__Parents.Service import Service
+from ..Firm.IFirmRepo import IFirmRepo
 from ..__Parents.Repository import Repository
+from flask import g
 
 
 class StorageService(Service, Repository):
-    def __init__(self, storage_repository: IStorageRepo):
+    def __init__(self, storage_repository: IStorageRepo, firm_repository: IFirmRepo):
         self.storage_repository: IStorageRepo = storage_repository
+        self.firm_repository: IFirmRepo = firm_repository
 
     # CREATE
     def create(self, body: dict) -> dict:
         if self.storage_repository.get_by_code(body['code']):
             return self.response_conflict('код занят')
+
+        if not self.firm_repository.get_by_id(firm_id=body['firm_id'], client_id=g.client_id):
+            return self.response_not_found('фирма не найдена')
 
         self.storage_repository.create(body)
         return self.response_created('склад успешно создан')
@@ -20,6 +26,9 @@ class StorageService(Service, Repository):
         storage = self.storage_repository.get_by_id(storage_id)
         if not storage:
             return self.response_not_found('склад не найден')
+
+        if not self.firm_repository.get_by_id(firm_id=body['firm_id'], client_id=g.client_id):
+            return self.response_not_found('фирма не найдена')
 
         self.storage_repository.update(storage=storage, body=body)
         return self.response_updated('склад обновлен')

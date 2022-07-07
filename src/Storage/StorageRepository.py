@@ -46,4 +46,6 @@ class StorageRepository(Repository, IStorageRepo):
                                              Storage.code == code if code else Storage.code.isnot(None),
                                              Storage.client_id == g.user.client_id)\
             .paginate(page=page, per_page=per_page)
+        for storage in storages.items:
+            storage.firm = storage.firm
         return self.get_page_items(storages)

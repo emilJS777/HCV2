@@ -15,7 +15,10 @@ class FirmPermissionRepository(Repository, IFirmPermissionRepo):
                               {'name': 'storage_get', 'title': 'получить хранилище'},
 
                               {'name': 'employee_edit', 'title': 'редактировать работников'},
-                              {'name': 'employee_get', 'title': 'получить работников'}]
+                              {'name': 'employee_get', 'title': 'получить работников'},
+
+                              {'name': 'resource_edit', 'title': 'редактировать ресурсы'},
+                              {'name': 'resource_get', 'title': 'получить ресурсы'}]
 
     def create(self, user, firm_id: int, client_id: int):
         firm_permission_list: list = []

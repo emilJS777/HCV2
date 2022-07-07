@@ -7,7 +7,8 @@ resource_schema = {
         "employee_bank_account": {"type": "string", "maxLength": 80},
         "location": {"type": "string", "maxLength": 80},
         "input_date": {"type": "string", "maxLength": 20},
-        "operation_date": {"type": "string", "maxLength": 20}
+        "operation_date": {"type": "string", "maxLength": 20},
+        "firm_id": {"type": "number"}
       },
     "required": ["title"]
 }

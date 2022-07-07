@@ -57,5 +57,7 @@ class ProductRepository(Repository, IProductRepo):
 
         for product in products.items:
             product.unit = product.unit
+            product.product_type = product.product_type
+
         return self.get_page_items(products)
 
