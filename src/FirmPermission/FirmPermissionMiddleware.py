@@ -32,7 +32,6 @@ class FirmPermissionMiddleware(Service):
                     if not allowed:
                         return FirmPermissionMiddleware.response_forbidden('ресурс запрещен')
 
-
                 if len(allowed_firm_ids):
                     g.allowed_firm_ids = allowed_firm_ids
                     return f(*args, **kwargs)

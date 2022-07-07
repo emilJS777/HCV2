@@ -19,7 +19,7 @@ class ProductController(Controller):
     # POST
     @expects_json(product_schema)
     @AuthMiddleware.check_authorize
-    @FirmPermissionMiddleware.check_permission('product_edit')
+    @FirmPermissionMiddleware.check_permission('product_edit', firm_request=True)
     def post(self) -> dict:
         res: dict = self.product_service.create(body=self.request.get_json())
         return res
@@ -27,7 +27,7 @@ class ProductController(Controller):
     # PUT
     @expects_json(product_schema)
     @AuthMiddleware.check_authorize
-    @FirmPermissionMiddleware.check_permission('product_edit')
+    @FirmPermissionMiddleware.check_permission('product_edit', firm_request=True)
     def put(self) -> dict:
         res: dict = self.product_service.update(product_id=self.id,
                                                 body=self.request.get_json())

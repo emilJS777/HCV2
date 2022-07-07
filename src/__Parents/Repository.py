@@ -12,7 +12,8 @@ class Repository:
             if not key == '_sa_instance_state':
                 if value.__class__.__name__ == 'Position' \
                         or value.__class__.__name__ == 'Sphere'\
-                        or value.__class__.__name__ == 'Unit':
+                        or value.__class__.__name__ == 'Unit' \
+                        or value.__class__.__name__ == 'Firm':
                     dict_item[key] = Repository.get_dict_items(value)
                 else:
                     dict_item[key] = value
