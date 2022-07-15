@@ -21,7 +21,7 @@ class SphereRepository(Repository, ISphereRepo):
     def delete(self, sphere: Sphere):
         sphere.delete_db()
 
-    def get_by_id(self, sphere_id: int) -> dict:
+    def get_by_id(self, sphere_id: int) -> Sphere:
         sphere = self.sphere.query.filter_by(id=sphere_id).first()
         return sphere
 

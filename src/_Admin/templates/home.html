@@ -1,0 +1,144 @@
+{% extends 'main.html' %}
+{% block body %}
+
+    <div class="body_block">
+    <!--        UNIT-->
+            <div>
+                <div class="block_header">
+                    <h3>Unit</h3>
+                    <a href="/admin/unit">ավելացնել</a>
+                </div>
+
+                <div class="table">
+
+                    <div class="thead">
+                        <div class="line">
+                            <div class="th">անվանում</div>
+                            <div class="th">նկարագրությունը</div>
+                        </div>
+                    </div>
+                    <div class="tbody">
+                        {% for unit in units %}
+                            <div class="line">
+                                <div class="td">{{ unit.title }}</div>
+                                <div class="td">{{ unit.description }}</div>
+                                <div class="td"><a href="/admin/unit/delete/{{unit.id}}">հեռացնել</a></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    <!-- UNIT END **** -->
+
+
+    <!--        SPHERE-->
+            <div>
+                <div class="block_header">
+                    <h3>Sphere</h3>
+                    <a href="/admin/sphere">ավելացնել</a>
+                </div>
+
+                <div class="table">
+
+                    <div class="thead">
+                        <div class="line">
+                            <div class="th">անուն</div>
+                            <div class="th">նկարագրությունը</div>
+                        </div>
+                    </div>
+                    <div class="tbody">
+                        {% for sphere in spheres %}
+                            <div class="line">
+                                <div class="td">{{ sphere.name }}</div>
+                                <div class="td">{{ sphere.description }}</div>
+                                <div class="td"><a href="/admin/sphere/delete/{{sphere.id}}">հեռացնել</a></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    <!-- SPHERE END **** -->
+
+            <!--        POSITION-->
+            <div>
+                <div class="block_header">
+                    <h3>Position</h3>
+                    <a href="/admin/position">ավելացնել</a>
+                </div>
+
+                <div class="table">
+                    <div class="thead">
+                        <div class="line">
+                            <div class="th">անվանում</div>
+                            <div class="th">նկարագրությունը</div>
+                        </div>
+                    </div>
+                    <div class="tbody">
+                        {% for position in positions %}
+                            <div class="line">
+                                <div class="td">{{ position.title }}</div>
+                                <div class="td">{{ position.description }}</div>
+                                <div class="td"><a href="/admin/position/delete/{{position.id}}">հեռացնել</a></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    <!-- POSITION END **** -->
+
+        <!--        INCOME TYPE-->
+            <div>
+                <div class="block_header">
+                    <h3>Income Type </h3>
+                    <a href="/admin/income_type">ավելացնել</a>
+                </div>
+
+                <div class="table">
+                    <div class="thead">
+                        <div class="line">
+                            <div class="th">անվանում</div>
+                            <div class="th">նկարագրությունը</div>
+                        </div>
+                    </div>
+                    <div class="tbody">
+                        {% for income_type in income_types %}
+                            <div class="line">
+                                <div class="td">{{ income_type.title }}</div>
+                                <div class="td">{{ income_type.description }}</div>
+                                <div class="td"><a href="/admin/income_type/delete/{{income_type.id}}">հեռացնել</a></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    <!-- INCOME TYPE END **** -->
+
+        <!--        EXPENSE TYPE-->
+            <div>
+                <div class="block_header">
+                    <h3>Expense Type </h3>
+                    <a href="/admin/expense_type">ավելացնել</a>
+                </div>
+
+                <div class="table">
+                    <div class="thead">
+                        <div class="line">
+                            <div class="th">անվանում</div>
+                            <div class="th">նկարագրությունը</div>
+                        </div>
+                    </div>
+                    <div class="tbody">
+                        {% for expense_type in expense_types %}
+                            <div class="line">
+                                <div class="td">{{ expense_type.title }}</div>
+                                <div class="td">{{ expense_type.description }}</div>
+                                <div class="td"><a href="/admin/expense_type/delete/{{expense_type.id}}">հեռացնել</a></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    <!-- EXPENSE TYPE END **** -->
+    </div>
+
+{% endblock %}

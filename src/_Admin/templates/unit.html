@@ -1,0 +1,19 @@
+{% extends 'home.html' %}
+
+{% block body %}
+
+<form action="unit" method="post">
+  <div class="form_block">
+    <label for="">անվանում</label>
+    <input type="text" name="title" placeholder="***">
+  </div>
+
+  <div class="form_block">
+    <label for="">նկարագրությունը</label>
+    <input type="text" placeholder="***" name="description">
+  </div>
+
+  <button>պահպանել</button>
+  <a href="/admin">չեղարկել</a>
+</form>
+{% endblock %}

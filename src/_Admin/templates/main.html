@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Home</title>
+</head>
+<body>
+
+<!--HEADER-->
+    <div class="header">
+        <div>
+            <a href="/admin">
+                <h3><span>Admin</span>Accounting</h3>
+            </a>
+        </div>
+        <div></div>
+        <div></div>
+    </div>
+<!--HEADER END ****-->
+{% block body %}
+{% endblock %}
+
+<!--BODY BLOCK END ****-->
+</body>
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .header{
+        background-color: #000;
+    }
+    .header a{
+        color: #fff;
+        text-decoration: none;
+    }
+    .header h3 span{
+        background-color: #8f5c30;
+        padding: 5px;
+        border-radius: 15px 0;
+    }
+    .header, .body_block{
+        padding: 20px 300px 20px 300px;
+    }
+
+    .body_block{
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 3em;
+    }
+    .body_block > div{
+        margin-top: 30px;
+     }
+
+    .block_header{
+        padding: 10px;
+        border-bottom: 1px solid #555;
+        display: grid;
+        grid-template-columns: 80% 20%;
+    }
+    .block_header h3{
+        font-size: 24px;
+    }
+    .block_header a{
+        color: #836464;
+        padding: 5px;
+        width: max-content;
+        text-decoration: none;
+    }
+
+    .table{
+        display: block;
+    }
+    .table > div .line{
+        display: grid;
+        grid-template-columns: 1fr 2fr .6fr;
+        padding: 8px;
+        overflow: hidden;
+    }
+    .table > .thead .line{
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .table > .tbody .line:nth-child(odd){
+        background-color: #eee;
+        border-radius: 10px;
+    }
+
+    .table > .tbody a{
+        color: #888;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        padding: 0 15px;
+    }
+
+    form{
+        width: max-content;
+        margin: 160px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1em;
+        -webkit-box-shadow: 3px 0px 15px 2px rgba(0,0,0,0.11);
+        box-shadow: 3px 0px 15px 2px rgba(0,0,0,0.11);
+    }
+    form .form_block{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    form input{
+        padding: 5px 15px;
+        border: 1px solid#555;
+        line-height: 2em;
+    }
+    form button{
+        color: #fff;
+        background-color: #555;
+        cursor: pointer;
+        padding: 6px;
+    }
+    form a{
+        color: #836464;
+        text-decoration: none;
+    }
+</style>
+
+</html>

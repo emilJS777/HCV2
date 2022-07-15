@@ -1,4 +1,5 @@
 from .config import api
+from ._Admin.AdminController import *
 from .User.UserController import UserController
 from .Auth.AuthController import AuthController
 from .Client.ClientController import ClientController

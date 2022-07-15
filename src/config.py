@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='./_Admin/templates')
 api = Api(app)
 
 # CONNECT TO DATABASE CONFIG
