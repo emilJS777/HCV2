@@ -1,19 +1,35 @@
 {% extends 'home.html' %}
 
 {% block body %}
+  {% if income_type %}
+    <form action="{{income_type.id}}" method="post">
+      <div class="form_block">
+        <label for="">անվանում</label>
+        <input type="text" name="title" placeholder="***" value="{{income_type.title}}">
+      </div>
 
-<form action="income_type" method="post">
-  <div class="form_block">
-    <label for="">անվանում</label>
-    <input type="text" name="title" placeholder="***">
-  </div>
+      <div class="form_block">
+        <label for="">նկարագրությունը</label>
+        <input type="text" placeholder="***" name="description" value="{{income_type.description}}">
+      </div>
 
-  <div class="form_block">
-    <label for="">նկարագրությունը</label>
-    <input type="text" placeholder="***" name="description">
-  </div>
+      <button>պահպանել</button>
+      <a href="/admin">չեղարկել</a>
+    </form>
+  {% else %}
+    <form action="income_type" method="post">
+      <div class="form_block">
+        <label for="">անվանում</label>
+        <input type="text" name="title" placeholder="***">
+      </div>
 
-  <button>պահպանել</button>
-  <a href="/admin">չեղարկել</a>
-</form>
+      <div class="form_block">
+        <label for="">նկարագրությունը</label>
+        <input type="text" placeholder="***" name="description">
+      </div>
+
+      <button>պահպանել</button>
+      <a href="/admin">չեղարկել</a>
+    </form>
+  {% endif %}
 {% endblock %}

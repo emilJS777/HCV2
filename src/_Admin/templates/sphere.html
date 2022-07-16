@@ -1,19 +1,35 @@
 {% extends 'home.html' %}
 
 {% block body %}
+  {% if sphere %}
+    <form action="{{sphere.id}}" method="post">
+      <div class="form_block">
+        <label for="">անուն</label>
+        <input type="text" name="name" placeholder="***" value="{{sphere.name}}">
+      </div>
 
-<form action="sphere" method="post">
-  <div class="form_block">
-    <label for="">անուն</label>
-    <input type="text" name="name" placeholder="***">
-  </div>
+      <div class="form_block">
+        <label for="">նկարագրությունը</label>
+        <input type="text" placeholder="***" name="description" value="{{sphere.description}}">
+      </div>
 
-  <div class="form_block">
-    <label for="">նկարագրությունը</label>
-    <input type="text" placeholder="***" name="description">
-  </div>
+      <button>պահպանել</button>
+      <a href="/admin">չեղարկել</a>
+    </form>
+  {% else %}
+    <form action="sphere" method="post">
+      <div class="form_block">
+        <label for="">անուն</label>
+        <input type="text" name="name" placeholder="***">
+      </div>
 
-  <button>պահպանել</button>
-  <a href="/admin">չեղարկել</a>
-</form>
+      <div class="form_block">
+        <label for="">նկարագրությունը</label>
+        <input type="text" placeholder="***" name="description">
+      </div>
+
+      <button>պահպանել</button>
+      <a href="/admin">չեղարկել</a>
+    </form>
+  {% endif %}
 {% endblock %}

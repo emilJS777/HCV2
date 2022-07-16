@@ -22,6 +22,7 @@
                             <div class="line">
                                 <div class="td">{{ unit.title }}</div>
                                 <div class="td">{{ unit.description }}</div>
+                                <div class="td"><a href="/admin/unit/{{unit.id}}">խմբագրել</a></div>
                                 <div class="td"><a href="/admin/unit/delete/{{unit.id}}">հեռացնել</a></div>
                             </div>
                         {% endfor %}
@@ -51,6 +52,7 @@
                             <div class="line">
                                 <div class="td">{{ sphere.name }}</div>
                                 <div class="td">{{ sphere.description }}</div>
+                                <div class="td"><a href="/admin/sphere/{{sphere.id}}">խմբագրել</a></div>
                                 <div class="td"><a href="/admin/sphere/delete/{{sphere.id}}">հեռացնել</a></div>
                             </div>
                         {% endfor %}
@@ -78,6 +80,7 @@
                             <div class="line">
                                 <div class="td">{{ position.title }}</div>
                                 <div class="td">{{ position.description }}</div>
+                                <div class="td"><a href="/admin/position/{{position.id}}">խմբագրել</a></div>
                                 <div class="td"><a href="/admin/position/delete/{{position.id}}">հեռացնել</a></div>
                             </div>
                         {% endfor %}
@@ -105,6 +108,7 @@
                             <div class="line">
                                 <div class="td">{{ income_type.title }}</div>
                                 <div class="td">{{ income_type.description }}</div>
+                                <div class="td"><a href="/admin/income_type/{{income_type.id}}">խմբագրել</a></div>
                                 <div class="td"><a href="/admin/income_type/delete/{{income_type.id}}">հեռացնել</a></div>
                             </div>
                         {% endfor %}
@@ -132,6 +136,7 @@
                             <div class="line">
                                 <div class="td">{{ expense_type.title }}</div>
                                 <div class="td">{{ expense_type.description }}</div>
+                                <div class="td"><a href="/admin/expense_type/{{expense_type.id}}">խմբագրել</a></div>
                                 <div class="td"><a href="/admin/expense_type/delete/{{expense_type.id}}">հեռացնել</a></div>
                             </div>
                         {% endfor %}

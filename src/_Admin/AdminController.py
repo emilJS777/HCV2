@@ -51,6 +51,16 @@ class AdminController(Controller):
         AdminController.unit_repository.delete(unit)
         return redirect('/admin')
 
+    # UNIT EDIT
+    @staticmethod
+    @app.route('/admin/unit/<int:id>', methods=['GET', 'POST'])
+    def unit_edit(id):
+        unit = AdminController.unit_repository.get_by_id(id)
+        if request.method == "POST":
+            AdminController.unit_repository.update(unit=unit, body={'title': request.form['title'], 'description': request.form['description']})
+            return redirect('/admin')
+        return render_template("unit.html", unit=unit)
+
     # SPHERE GET DELETE
     @staticmethod
     @app.route('/admin/sphere', methods=['GET', 'POST'])
@@ -69,6 +79,17 @@ class AdminController(Controller):
         sphere = AdminController.sphere_repository.get_by_id(id)
         AdminController.sphere_repository.delete(sphere)
         return redirect('/admin')
+
+    # SPHERE EDIT
+    @staticmethod
+    @app.route('/admin/sphere/<int:id>', methods=['GET', 'POST'])
+    def sphere_edit(id):
+        sphere = AdminController.sphere_repository.get_by_id(id)
+        if request.method == "POST":
+            AdminController.sphere_repository.update(sphere=sphere, body={'name': request.form['name'],
+                                                                          'description': request.form['description']})
+            return redirect('/admin')
+        return render_template("sphere.html", sphere=sphere)
 
     # POSITION GET POST
     @staticmethod
@@ -89,7 +110,18 @@ class AdminController(Controller):
         AdminController.position_repository.delete(position)
         return redirect('/admin')
 
-    # INCOME GET POST
+    # POSITION EDIT
+    @staticmethod
+    @app.route('/admin/position/<int:id>', methods=['GET', 'POST'])
+    def position_edit(id):
+        position = AdminController.position_repository.get_by_id(id)
+        if request.method == "POST":
+            AdminController.position_repository.update(position=position, body={'title': request.form['title'],
+                                                                                'description': request.form['description']})
+            return redirect('/admin')
+        return render_template("position.html", position=position)
+
+    # INCOME TYPE GET POST
     @staticmethod
     @app.route('/admin/income_type', methods=['GET', 'POST'])
     def income_type():
@@ -100,13 +132,24 @@ class AdminController(Controller):
 
         return render_template('income_type.html')
 
-    # INCOME DELETE
+    # INCOME TYPE DELETE
     @staticmethod
     @app.route('/admin/income_type/delete/<int:id>', methods=['GET'])
     def income_type_delete(id):
         income_type = AdminController.income_type_repository.get_by_id(id)
         AdminController.income_type_repository.delete(income_type)
         return redirect('/admin')
+
+    # INCOME TYPE EDIT
+    @staticmethod
+    @app.route('/admin/income_type/<int:id>', methods=['GET', 'POST'])
+    def income_type_edit(id):
+        income_type = AdminController.income_type_repository.get_by_id(id)
+        if request.method == "POST":
+            AdminController.income_type_repository.update(income_type=income_type, body={'title': request.form['title'],
+                                                                                         'description': request.form['description']})
+            return redirect('/admin')
+        return render_template("income_type.html", income_type=income_type)
 
     # EXPENSE GET POST
     @staticmethod
@@ -126,3 +169,14 @@ class AdminController(Controller):
         expense_type = AdminController.expense_type_repository.get_by_id(id)
         AdminController.expense_type_repository.delete(expense_type)
         return redirect('/admin')
+
+    # EXPENSE TYPE EDIT
+    @staticmethod
+    @app.route('/admin/expense_type/<int:id>', methods=['GET', 'POST'])
+    def expense_type_edit(id):
+        expense_type = AdminController.expense_type_repository.get_by_id(id)
+        if request.method == "POST":
+            AdminController.expense_type_repository.update(expense_type=expense_type, body={'title': request.form['title'],
+                                                                                            'description': request.form['description']})
+            return redirect('/admin')
+        return render_template("expense_type.html", expense_type=expense_type)
