@@ -17,9 +17,9 @@ class IIncomeRepo(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, income_id: int, client_id: int) -> dict:
+    def get_by_id(self, income_id: int) -> Income:
         pass
 
     @abstractmethod
-    def get_all(self, page: int, per_page: int, client_id: int) -> dict:
+    def get_all(self, page: int, per_page: int, firm_id: int or None) -> dict:
         pass

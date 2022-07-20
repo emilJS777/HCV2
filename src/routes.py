@@ -16,6 +16,8 @@ from .Colleague.ColleagueController import ColleagueController
 from .Service.ServiceController import ServiceController
 from .Resource.ResourceController import ResourceController
 from .Employee.EmployeeController import EmployeeController
+from .Income.IncomeController import IncomeController
+from .Expense.ExpenseController import ExpenseController
 
 api.add_resource(AuthController, "/auth")
 api.add_resource(UserController, "/user")
@@ -33,3 +35,5 @@ api.add_resource(ColleagueController, "/colleague")
 api.add_resource(ServiceController, "/service")
 api.add_resource(ResourceController, "/resource")
 api.add_resource(EmployeeController, "/employee")
+api.add_resource(IncomeController, "/income")
+api.add_resource(ExpenseController, "/expense")
