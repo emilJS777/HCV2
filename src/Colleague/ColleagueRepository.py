@@ -14,6 +14,7 @@ class ColleagueRepository(Repository, IColleagueRepo):
         colleague.phone_number = body['phone_number']
         colleague.hvhh = body['hvhh']
         colleague.legal_address = body['legal_address']
+        colleague.account_number = body['account_number']
 
         colleague.client_id = client_id
         colleague.save_db()
@@ -25,6 +26,7 @@ class ColleagueRepository(Repository, IColleagueRepo):
         colleague.phone_number = body['phone_number']
         colleague.hvhh = body['hvhh']
         colleague.legal_address = body['legal_address']
+        colleague.account_number = body['account_number']
         colleague.update_db()
 
     def delete(self, colleague: Colleague):

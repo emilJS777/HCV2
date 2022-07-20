@@ -12,4 +12,6 @@ class Colleague(Model, db.Model):
     phone_number = db.Column(db.Integer, nullable=False)
     hvhh = db.Column(db.String(60))
 
+    account_number = db.Column(db.String(60))
+
     client_id = db.Column(db.Integer)

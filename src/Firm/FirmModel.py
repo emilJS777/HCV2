@@ -19,3 +19,5 @@ class Firm(Model, db.Model):
     sphere = relationship("Sphere")
 
     client_id = db.Column(db.Integer)
+
+
