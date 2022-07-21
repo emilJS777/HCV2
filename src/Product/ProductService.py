@@ -79,13 +79,13 @@ class ProductService(Service, Repository):
         })
 
     # GET ALL
-    def get_all(self, page: int, per_page: int, code: int or None, product_type_id: int or None, storage_id: int or None) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None, product_type_id: int or None, storage_id: int or None) -> dict:
         products = self.product_repository.get_all(
             page=page,
             per_page=per_page,
             product_type_id=product_type_id,
             storage_id=storage_id,
             client_id=g.client_id,
-            code=code)
+            search=search)
 
         return self.response_ok(products)

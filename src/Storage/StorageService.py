@@ -59,6 +59,6 @@ class StorageService(Service, Repository):
         })
 
     # GET ALL
-    def get_all(self, page: int, per_page: int, firm_id: int or None, code: str or None) -> dict:
-        storages = self.storage_repository.get_all(page=page, per_page=per_page, firm_id=firm_id, code=code)
+    def get_all(self, page: int, per_page: int, firm_id: int or None, search: str or None) -> dict:
+        storages = self.storage_repository.get_all(page=page, per_page=per_page, firm_id=firm_id, search=search)
         return self.response_ok(storages)

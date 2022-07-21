@@ -2,6 +2,8 @@ from src.Firm.IFirmRepo import IFirmRepo
 from src.__Parents.Repository import Repository
 from .FirmModel import Firm
 from flask import g
+from sqlalchemy import or_
+
 
 
 class FirmRepository(Repository, IFirmRepo):
@@ -53,11 +55,11 @@ class FirmRepository(Repository, IFirmRepo):
             .filter_by(id=firm_id, client_id=client_id).first()
         return firm
 
-    def get_all(self, page: int, per_page: int, title: str or None, sphere_id: int or None, client_id: int) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None, sphere_id: int or None, client_id: int) -> dict:
         firms = self.firm.query.filter_by(client_id=client_id)\
             .filter(self.firm.id.in_(g.allowed_firm_ids))\
-            .filter(self.firm.sphere_id == sphere_id if sphere_id else self.firm.sphere_id.isnot(None),
-                    self.firm.title == title if title else self.firm.title.isnot(None))\
+            .filter(self.firm.sphere_id == sphere_id if sphere_id else self.firm.sphere_id.isnot(None))\
+            .filter(or_(self.firm.title.like(f"%{search}%"), self.firm.email_address.like(f"%{search}%")) if search else self.firm.id.isnot(None))\
             .paginate(page=page, per_page=per_page)
 
         for firm in firms.items:

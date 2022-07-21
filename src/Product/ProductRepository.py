@@ -45,12 +45,12 @@ class ProductRepository(Repository, IProductRepo):
             .filter(Storage.firm_id.in_(g.allowed_firm_ids)).first()
         return product
 
-    def get_all(self, page: int, per_page: int, product_type_id: int or None, storage_id: int or None, code: int or None, client_id: int) -> dict:
+    def get_all(self, page: int, per_page: int, product_type_id: int or None, storage_id: int or None, search: str or None, client_id: int) -> dict:
         products = self.product.query\
             .filter_by(client_id=client_id)\
             .filter(self.product.product_type_id == product_type_id if product_type_id else self.product.product_type_id.isnot(None),
-                    self.product.storage_id == storage_id if storage_id else self.product.storage_id.isnot(None),
-                    self.product.code == code if code else self.product.code.isnot(None))\
+                    self.product.storage_id == storage_id if storage_id else self.product.storage_id.isnot(None))\
+            .filter(or_(self.product.code.like(f"%{search}%"), self.product.name.like(f"%{search}%")) if search else self.product.id.isnot(None))\
             .join(self.product.storage)\
             .filter(Storage.firm_id.in_(g.allowed_firm_ids))\
             .paginate(page=page, per_page=per_page)

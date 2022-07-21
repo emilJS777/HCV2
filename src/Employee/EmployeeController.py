@@ -46,6 +46,6 @@ class EmployeeController(Controller):
             res: dict = self.employee_service.get_all(
                 page=self.page,
                 per_page=self.per_page,
-                code=self.arguments.get('code'),
+                search=self.arguments.get('search'),
                 firm_id=self.arguments.get('firm_id'))
         return res

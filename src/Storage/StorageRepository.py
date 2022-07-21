@@ -2,6 +2,7 @@ from src.Storage.IStorageRepo import IStorageRepo
 from src.Storage.StorageModel import Storage
 from src.__Parents.Repository import Repository
 from flask import g
+from sqlalchemy import or_
 
 
 class StorageRepository(Repository, IStorageRepo):
@@ -40,11 +41,11 @@ class StorageRepository(Repository, IStorageRepo):
             .filter(Storage.firm_id.in_(g.allowed_firm_ids)).first()
         return storage
 
-    def get_all(self, page: int, per_page: int, firm_id: int or None, code: str or None):
+    def get_all(self, page: int, per_page: int, firm_id: int or None, search: str or None):
         storages = self.storage.query.filter(Storage.firm_id.in_(g.allowed_firm_ids),
                                              Storage.firm_id == firm_id if firm_id else Storage.firm_id.isnot(None),
-                                             Storage.code == code if code else Storage.code.isnot(None),
                                              Storage.client_id == g.user.client_id)\
+                                     .filter(or_(Storage.title.like(f"%{search}%"), Storage.code.like(f"%{search}%")) if search else Storage.id.isnot(None))\
             .paginate(page=page, per_page=per_page)
         for storage in storages.items:
             storage.firm = storage.firm

@@ -58,6 +58,6 @@ class FirmService(Service, Repository):
         return self.response_ok(self.get_dict_items(firm))
 
     # GET ALL
-    def get_all(self, page: int, per_page: int, title: str or None, sphere_id: int or None) -> dict:
-        firms = self.firm_repository.get_all(page=page, per_page=per_page, title=title, sphere_id=sphere_id, client_id=g.client_id)
+    def get_all(self, page: int, per_page: int, search: str or None, sphere_id: int or None) -> dict:
+        firms = self.firm_repository.get_all(page=page, per_page=per_page, search=search, sphere_id=sphere_id, client_id=g.client_id)
         return self.response_ok(firms)

@@ -59,10 +59,10 @@ class ServiceService(Service, Repository):
 
         return self.response_ok(self.get_dict_items(service))
 
-    def get_all(self, page: int, per_page: int, code: int or None) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None) -> dict:
         services = self.service_repository.get_all(
             page=page,
             per_page=per_page,
-            code=code,
+            search=search,
             client_id=g.client_id)
         return self.response_ok(self.get_page_items(services))

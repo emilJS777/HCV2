@@ -1,6 +1,7 @@
 from src.__Parents.Repository import Repository
 from .IColleagueRepo import IColleagueRepo
 from .ColleagueModel import Colleague
+from sqlalchemy import or_
 
 
 class ColleagueRepository(Repository, IColleagueRepo):
@@ -46,6 +47,9 @@ class ColleagueRepository(Repository, IColleagueRepo):
                                                 self.colleague.id != colleague_id).first()
         return colleague
 
-    def get_all(self, page: int, per_page: int, client_id: int) -> dict:
-        colleagues = self.colleague.query.filter_by(client_id=client_id).paginate(page=page, per_page=per_page)
+    def get_all(self, page: int, per_page: int, search: str or None, client_id: int) -> dict:
+        colleagues = self.colleague.query.filter_by(client_id=client_id)\
+            .filter(or_(self.colleague.title.like(f"%{search}%"), self.colleague.code.like(f"%{search}%"))
+                                         if search else self.colleague.id.isnot(None))\
+            .paginate(page=page, per_page=per_page)
         return self.get_page_items(colleagues)

@@ -24,5 +24,3 @@ class Model:
     @staticmethod
     def update_db():
         db.session.commit()
-
-

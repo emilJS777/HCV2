@@ -21,5 +21,5 @@ class IEmployeeRepo(ABC):
         pass
 
     @abstractmethod
-    def get_all(self, page: int, per_page: int, code: int or None, firm_id: int or None) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None, firm_id: int or None) -> dict:
         pass

@@ -52,6 +52,6 @@ class ProductController(Controller):
                 per_page=self.per_page,
                 product_type_id=self.arguments.get('product_type_id'),
                 storage_id=self.arguments.get('storage_id'),
-                code=self.arguments.get('code'))
+                search=self.arguments.get('search'))
 
         return res

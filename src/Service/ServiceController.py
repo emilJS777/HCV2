@@ -41,5 +41,5 @@ class ServiceController(Controller):
             res: dict = self.service_service.get_all(
                 page=self.page,
                 per_page=self.per_page,
-                code=self.arguments.get('code'))
+                search=self.arguments.get('search'))
         return res

@@ -21,7 +21,7 @@ class IColleagueRepo(ABC):
         pass
 
     @abstractmethod
-    def get_all(self, page: int, per_page: int, client_id: int) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None, client_id: int) -> dict:
         pass
 
     @abstractmethod

@@ -25,5 +25,5 @@ class IStorageRepo(ABC):
         pass
 
     @abstractmethod
-    def get_all(self, page: int, per_page: int, firm_id: int or None, code: str or None):
+    def get_all(self, page: int, per_page: int, firm_id: int or None, search: str or None):
         pass

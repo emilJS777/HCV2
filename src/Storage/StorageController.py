@@ -45,5 +45,5 @@ class StorageController(Controller):
                 page=self.page,
                 per_page=self.per_page,
                 firm_id=self.arguments.get('firm_id'),
-                code=self.arguments.get('code'))
+                search=self.arguments.get('search'))
         return res

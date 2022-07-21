@@ -47,10 +47,11 @@ class ColleagueService(Service, Repository):
         return self.response_ok(self.get_dict_items(colleague))
 
     # GET ALL
-    def get_all(self, page: int, per_page: int) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None) -> dict:
         colleagues = self.colleague_repository.get_all(
             page=page,
             per_page=per_page,
+            search=search,
             client_id=g.user.client_id)
 
         return self.response_ok(colleagues)

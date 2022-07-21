@@ -40,5 +40,5 @@ class ColleagueController(Controller):
         if self.id:
             res: dict = self.colleague_service.get_by_id(self.id)
         else:
-            res: dict = self.colleague_service.get_all(page=self.page, per_page=self.per_page)
+            res: dict = self.colleague_service.get_all(page=self.page, per_page=self.per_page, search=self.arguments.get('search'))
         return res

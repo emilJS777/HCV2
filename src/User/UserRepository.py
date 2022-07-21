@@ -39,7 +39,7 @@ class UserRepository(Repository, IUserRepo):
         user = self.user.query.filter_by(id=user_id).first()
 
         if body.get('password'):
-            user.password_hash = generate_password_hash(body['password'])
+            user.password_hash = generate_password_hash(body['password']).decode('utf8')
 
         if body.get('name'):
             user.name = body['name']

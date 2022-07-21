@@ -2,6 +2,7 @@ from .IEmployeeRepo import IEmployeeRepo
 from src.__Parents.Repository import Repository
 from .EmployeeModel import Employee
 from flask import g
+from sqlalchemy import or_
 
 
 class EmployeeRepository(Repository, IEmployeeRepo):
@@ -45,11 +46,12 @@ class EmployeeRepository(Repository, IEmployeeRepo):
         employee.firm = employee.firm
         return employee
 
-    def get_all(self, page: int, per_page: int, code: int or None, firm_id: int or None) -> dict:
+    def get_all(self, page: int, per_page: int, search: str or None, firm_id: int or None) -> dict:
         employees = self.employee.query.filter_by(client_id=g.client_id)\
             .filter(Employee.firm_id.in_(g.allowed_firm_ids))\
-            .filter(self.employee.code == code if code else self.employee.code.isnot(None),
-                    self.employee.firm_id == firm_id if firm_id else self.employee.firm_id.isnot(None))\
+            .filter(self.employee.firm_id == firm_id if firm_id else self.employee.firm_id.isnot(None))\
+            .filter(or_(self.employee.title.like(f"%{search}%"), self.employee.code.like(f"%{search}%"))
+                                        if search else self.employee.id.isnot(None))\
             .paginate(page=page, per_page=per_page)
 
         for employee in employees.items:

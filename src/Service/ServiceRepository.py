@@ -1,6 +1,7 @@
 from .IServiceRepo import IServiceRepo
 from .ServiceModel import Service
 from src.__Parents.Repository import Repository
+from sqlalchemy import or_
 
 
 class ServiceRepository(Repository, IServiceRepo):
@@ -34,9 +35,9 @@ class ServiceRepository(Repository, IServiceRepo):
         service.unit = service.unit
         return service
 
-    def get_all(self, page: int, per_page: int, code: int or None, client_id: int) -> list[dict]:
+    def get_all(self, page: int, per_page: int, search: str or None, client_id: int) -> list[dict]:
         services = self.service.query.filter_by(client_id=client_id)\
-            .filter(self.service.code == code if code else self.service.code.isnot(None))\
+            .filter(or_(self.service.title.like(f"%{search}%"), self.service.code.like(f"%{search}%")) if search else self.service.id.isnot(None))\
             .paginate(page=page, per_page=per_page)
 
         for service in services.items:
